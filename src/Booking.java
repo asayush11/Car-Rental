@@ -10,6 +10,7 @@ public class Booking {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private double totalPrice;
+    private BookingStatus bookingStatus;
 
     public String getBookingID() {
         return bookingID;
@@ -34,6 +35,7 @@ public class Booking {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.totalPrice = calculateTotalPrice();
+        this.bookingStatus = BookingStatus.PENDING;
     }
 
     private double calculateTotalPrice(){
@@ -54,5 +56,13 @@ public class Booking {
     public void setEndDateTime(LocalDateTime endDateTime) {
         this.endDateTime = endDateTime;
         this.totalPrice = calculateTotalPrice();
+    }
+
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
 }

@@ -22,14 +22,14 @@ public class main {
         User user1 = new User("Ayush", "12345", "asdfg");
         User user2 = new User("Sharma", "12346", "asert");
 
-        bookCar(bookingSystem, user1, 5);
-        bookCar(bookingSystem, user2, 9);
-        bookCar(bookingSystem, user1, 4);
-        bookCar(bookingSystem, user2, 6);
+        bookCar(bookingSystem, user1, 5, new CardPayment());
+        bookCar(bookingSystem, user2, 9, new ChequePayment());
+        bookCar(bookingSystem, user1, 4, new CardPayment());
+        bookCar(bookingSystem, user2, 6, new ChequePayment());
         bookingSystem.cancelBooking(bookingID);
     }
 
-    private static void bookCar(BookingSystem bookingSystem, User user1, int numberOfPeople) {
+    private static void bookCar(BookingSystem bookingSystem, User user1, int numberOfPeople, ProcessPayment paymentMethod) {
         // booking a car
         LocalDateTime startDateTime = LocalDateTime.now().plusDays(2);
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(5);
@@ -37,7 +37,7 @@ public class main {
         List<Car> availableCars = bookingSystem.searchCars(numberOfPeople, startDateTime, endDateTime);
         if(!availableCars.isEmpty()){
             for(Car car : availableCars){
-                Booking booking = bookingSystem.bookCar(user1, car, startDateTime, endDateTime);
+                Booking booking = bookingSystem.bookCar(user1, car, startDateTime, endDateTime, paymentMethod);
                 if(booking != null) {
                     bookingSystem.makePayment(booking.getTotalPrice(), new CardPayment());
                     bookingID = booking.getBookingID();
